@@ -1,8 +1,7 @@
-// app/(auth)/login/page.tsx
 "use client";
 
 import React, { useState } from "react";
-// import api from "@/lib/api";
+import api from "@/api";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -19,18 +18,24 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
+      // 🔹 Send login request
       const response = await api.post("/api/auth/login", { email, password });
-
       console.log("Login successful:", response.data);
 
       if (response.data?.success && response.data?.data) {
-        localStorage.setItem("userInfo", JSON.stringify(response.data.data));
+        const { _id, name, email, token } = response.data.data;
+
+        // ✅ Store each value separately in localStorage
+        localStorage.setItem("_id", _id);
+        localStorage.setItem("name", name);
+        localStorage.setItem("email", email);
+        localStorage.setItem("token", token);
       }
 
-      // Next.js client-side redirect
-      router.push("/add-website");
+      // ✅ Redirect to /dashboard/report
+      router.push("/dashboard/report");
     } catch (err: any) {
-      console.error(err);
+      console.error("Login error:", err);
       setError(err.response?.data?.message || "Invalid email or password.");
     } finally {
       setLoading(false);
@@ -43,6 +48,7 @@ export default function LoginPage() {
         <h2 className="text-3xl font-bold text-center text-gray-800">
           Welcome Back
         </h2>
+
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
