@@ -1,4 +1,3 @@
-// app/dashboard/components/Sidebar.tsx
 "use client";
 
 import { usePathname } from "next/navigation";
@@ -13,7 +12,9 @@ import {
   Settings,
   ChevronLeft,
   ChevronsLeft,
+  X,
 } from "lucide-react";
+import React from "react";
 
 interface NavItem {
   label: string;
@@ -62,9 +63,10 @@ const navItems: NavItem[] = [
 export const Sidebar: React.FC<{
   isCollapsed: boolean;
   setIsCollapsed: (v: boolean) => void;
-}> = ({ isCollapsed, setIsCollapsed }) => {
-  const pathname = usePathname(); // <-- current URL
-
+  isSidebarOpen?: boolean;
+  setIsSidebarOpen?: (v: boolean) => void;
+}> = ({ isCollapsed, setIsCollapsed, isSidebarOpen, setIsSidebarOpen }) => {
+  const pathname = usePathname();
   const sidebarWidth = isCollapsed ? "w-20" : "w-64";
   const toggleIcon = isCollapsed ? (
     <ChevronsLeft className="w-5 h-5" />
@@ -73,66 +75,91 @@ export const Sidebar: React.FC<{
   );
 
   const isActive = (href: string) => {
-    if (href === "/dashboard/report") {
-      return pathname.startsWith("/dashboard/report");
-    }
+    if (href === "/dashboard/report") return pathname.startsWith("/dashboard/report");
     return pathname === href;
   };
 
   return (
     <aside
-      className={`fixed top-0 left-0 bottom-0 z-40 flex flex-col h-full bg-white border-r border-gray-200 transition-all duration-300 ${sidebarWidth}`}
+      className={`
+        fixed top-0 left-0 bottom-0 z-40 flex flex-col h-full bg-white border-r border-gray-200 
+        transition-all duration-300 ${sidebarWidth}
+        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0
+      `}
     >
       {/* Logo */}
-      <div className="h-16 flex items-center justify-center p-4 border-b border-gray-200 bg-yellow-100/50">
-        <div className="font-extrabold text-lg text-gray-900 tracking-wide">
-          {isCollapsed ? (
-            <LayoutDashboard className="w-6 h-6 text-yellow-500" />
-          ) : (
-            "KRAFFIC"
-          )}
+      <div className="h-16 flex items-center justify-between p-4 border-b border-gray-200 bg-yellow-100">
+        <div className="font-extrabold text-lg text-gray-900 tracking-wide flex items-center gap-2">
+          <LayoutDashboard className="w-6 h-6 text-yellow-500" />
+          {!isCollapsed && <span>KRAFFIC</span>}
         </div>
+
+        {/* Close icon for mobile */}
+        {/* <button
+          className="md:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-white/70 hover:bg-white text-gray-700 shadow-sm hover:shadow transition-all duration-200 active:scale-95"
+          onClick={() => setIsSidebarOpen && setIsSidebarOpen(false)}
+          aria-label="Close sidebar"
+        >
+          <X className="w-5 h-5 stroke-[2.5]" />
+        </button> */}
       </div>
 
+
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto pt-2 pb-4 space-y-1">
+      <nav className="flex-1 overflow-y-auto py-4 space-y-1">
         {navItems.map((item) => (
           <button
             key={item.label}
-            onClick={() => (window.location.href = item.href)}
-            className={`w-full flex items-center px-4 h-12 transition-all ${
-              isActive(item.href)
-                ? "bg-yellow-100 text-yellow-800 font-bold border-r-4 border-yellow-500"
-                : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-            } ${isCollapsed ? "justify-center" : "gap-3"}`}
+            onClick={() => {
+              window.location.href = item.href;
+              if (setIsSidebarOpen) setIsSidebarOpen(false);
+            }}
+            className={`w-full flex items-center ${isCollapsed ? "justify-center" : "justify-start"
+              } h-12 px-4 transition-all ${isActive(item.href)
+                ? "bg-yellow-100 text-yellow-800 font-semibold border-r-4 border-yellow-500"
+                : "text-gray-600 hover:bg-yellow-100 hover:text-gray-900"
+              }`}
           >
+<<<<<<< HEAD
             <div className="w-5 h-5 flex items-center justify-center ">
               {item.icon}
             </div>
             {!isCollapsed && (
               <span className="text-sm tracking-wide flex-1">{item.label}</span>
             )}
+=======
+            <div className="flex items-center gap-3 w-full justify-start">
+              <div className="flex items-center justify-center w-5 h-5 shrink-0">{item.icon}</div>
+              {!isCollapsed && <span className="text-sm tracking-wide leading-none">{item.label}</span>}
+            </div>
+>>>>>>> 9687cb4 (Done)
           </button>
         ))}
 
         {/* Settings */}
-        <div className="pt-2 border-t border-gray-100 mt-4">
+        <div className="pt-4 border-t border-gray-100 mt-4">
           <button
             onClick={() => (window.location.href = "/settings")}
-            className={`w-full flex items-center px-4 h-12 transition-all text-gray-600 hover:bg-gray-50 hover:text-gray-900 ${
-              isCollapsed ? "justify-center" : "gap-3"
-            }`}
+            className={`w-full flex items-center ${isCollapsed ? "justify-center" : "justify-start"
+              } h-12 px-4 text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all`}
           >
+<<<<<<< HEAD
             <Settings className="w-5 h-5" />
             {!isCollapsed && (
               <span className="text-sm tracking-wide">Settings</span>
             )}
+=======
+            <div className="flex items-center gap-3 w-full justify-start">
+              <Settings className="w-5 h-5 shrink-0" />
+              {!isCollapsed && <span className="text-sm tracking-wide leading-none">Settings</span>}
+            </div>
+>>>>>>> 9687cb4 (Done)
           </button>
         </div>
       </nav>
 
       {/* Collapse Button */}
-      <div className="p-2 border-t border-gray-200 flex justify-end">
+      <div className="p-3 border-t border-gray-200 flex justify-end">
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition"

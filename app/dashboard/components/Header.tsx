@@ -61,7 +61,7 @@ export const Header: React.FC<{ isCollapsed: boolean }> = ({ isCollapsed }) => {
       style={{ left: isCollapsed ? "5rem" : "16rem" }}
     >
       <div className="relative flex items-center gap-4" ref={dropdownRef}>
-        <span className="text-sm text-gray-500 font-medium">{userName}</span>
+        {/* <span className="text-sm text-gray-500 font-medium">{userName}</span> */}
 
         <div
           className="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:ring-2 hover:ring-indigo-400 transition"
