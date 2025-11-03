@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import api from "@/api";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -18,21 +19,21 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      // 🔹 Send login request
       const response = await api.post("/api/auth/login", { email, password });
       console.log("Login successful:", response.data);
 
       if (response.data?.success && response.data?.data) {
         const { _id, name, email, token } = response.data.data;
 
-        // ✅ Store each value separately in localStorage
+        // Save user details in localStorage
         localStorage.setItem("_id", _id);
         localStorage.setItem("name", name);
         localStorage.setItem("email", email);
-        localStorage.setItem("token", token);
+
+        // Save only token in cookies (expires in 7 days)
+        Cookies.set("token", token, { expires: 7 });
       }
 
-      // ✅ Redirect to /dashboard/report
       router.push("/dashboard/report");
     } catch (err: any) {
       console.error("Login error:", err);
