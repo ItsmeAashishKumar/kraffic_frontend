@@ -34,7 +34,7 @@ export default function LoginPage() {
         Cookies.set("token", token, { expires: 7 });
       }
 
-      router.push("/dashboard/report");
+      router.push("/dashboard");
     } catch (err: any) {
       console.error("Login error:", err);
       setError(err.response?.data?.message || "Invalid email or password.");
