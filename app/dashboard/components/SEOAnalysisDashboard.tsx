@@ -53,9 +53,9 @@ export const SEOAnalysisDashboard: React.FC<{ analysis: AnalysisData }> = ({ ana
         </div>
       </header>
 
-      <main className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+      <main className="flex flex-col w-full gap-8">
         <div className="xl:col-span-2 space-y-8">
-          <section className="bg-white p-6 shadow-xl rounded-xl border border-gray-100 divide-y divide-gray-100">
+          <section className="bg-white p-6 shadow-xl rounded-sm border border-gray-100 divide-y divide-gray-100">
             <ExecutiveSummary summary={executive_summary} />
             <TopActions actions={top_three_actions} />
           </section>
@@ -63,8 +63,8 @@ export const SEOAnalysisDashboard: React.FC<{ analysis: AnalysisData }> = ({ ana
           <DetailedIssuesReport detailed_report={detailed_report} total_issues={total_issues} />
         </div>
 
-        <div className="xl:col-span-1 space-y-8 sticky top-10 self-start">
-          <section className="bg-white p-6 shadow-lg rounded-xl border border-gray-200">
+        <div className="w-full flex flex-col gap-4 self-start">
+          <section className="bg-white p-6 shadow-lg rounded-sm border border-gray-200">
             <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
               <BarChart3 className="w-5 h-5 text-indigo-600" />
               Category Scores
@@ -72,7 +72,7 @@ export const SEOAnalysisDashboard: React.FC<{ analysis: AnalysisData }> = ({ ana
             <CategoryBarChart data={barChartData} />
           </section>
 
-          <section className="bg-white p-6 shadow-lg rounded-xl border border-gray-200">
+          <section className="bg-white p-6 shadow-lg rounded-sm border border-gray-200">
             <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-red-600" />
               Issue Type Breakdown
