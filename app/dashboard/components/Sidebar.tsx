@@ -120,19 +120,10 @@ export const Sidebar: React.FC<{
                 : "text-gray-600 hover:bg-yellow-100 hover:text-gray-900"
               }`}
           >
-<<<<<<< HEAD
-            <div className="w-5 h-5 flex items-center justify-center ">
-              {item.icon}
-            </div>
-            {!isCollapsed && (
-              <span className="text-sm tracking-wide flex-1">{item.label}</span>
-            )}
-=======
             <div className="flex items-center gap-3 w-full justify-start">
               <div className="flex items-center justify-center w-5 h-5 shrink-0">{item.icon}</div>
               {!isCollapsed && <span className="text-sm tracking-wide leading-none">{item.label}</span>}
             </div>
->>>>>>> 9687cb4 (Done)
           </button>
         ))}
 
@@ -143,17 +134,10 @@ export const Sidebar: React.FC<{
             className={`w-full flex items-center ${isCollapsed ? "justify-center" : "justify-start"
               } h-12 px-4 text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all`}
           >
-<<<<<<< HEAD
-            <Settings className="w-5 h-5" />
-            {!isCollapsed && (
-              <span className="text-sm tracking-wide">Settings</span>
-            )}
-=======
             <div className="flex items-center gap-3 w-full justify-start">
               <Settings className="w-5 h-5 shrink-0" />
               {!isCollapsed && <span className="text-sm tracking-wide leading-none">Settings</span>}
             </div>
->>>>>>> 9687cb4 (Done)
           </button>
         </div>
       </nav>
