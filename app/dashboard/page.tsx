@@ -11,6 +11,7 @@ import {
   ToggleRight,
   Loader2,
 } from "lucide-react";
+import Cookies from "js-cookie";
 import api from "@/api";
 
 /* -------------------------------------------------
@@ -40,7 +41,8 @@ export default function DashboardHome() {
   ------------------------------------------------------------------ */
   useEffect(() => {
     const fetchWebsites = async () => {
-      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      const token = Cookies.get("token"); // 🔹 Read token from cookies
+
       if (!token) {
         toast.error("Please log in to view websites");
         setFetching(false);
@@ -59,7 +61,10 @@ export default function DashboardHome() {
 
         const formatted: Website[] = fetchedSites.map((site: any) => {
           const domain = new URL(site.url).hostname;
-          const status = (site.status || "pending").toLowerCase() as "pending" | "active" | "inactive";
+          const status = (site.status || "pending").toLowerCase() as
+            | "pending"
+            | "active"
+            | "inactive";
 
           return {
             id: site._id || site.id,
@@ -136,7 +141,8 @@ export default function DashboardHome() {
       setUrl("");
       setIsModalOpen(false);
     } catch (err: any) {
-      const msg = err.response?.data?.message || err.message || "Failed to add website";
+      const msg =
+        err.response?.data?.message || err.message || "Failed to add website";
       toast.error(msg, { id: toastId });
     } finally {
       setLoading(false);
@@ -150,7 +156,11 @@ export default function DashboardHome() {
     setWebsites((prev) =>
       prev.map((w) =>
         w.id === id
-          ? { ...w, isActive: !w.isActive, status: w.isActive ? "inactive" : "active" }
+          ? {
+              ...w,
+              isActive: !w.isActive,
+              status: w.isActive ? "inactive" : "active",
+            }
           : w
       )
     );
@@ -215,8 +225,12 @@ export default function DashboardHome() {
     <div>
       <div className="min-h-screen bg-gray-50 p-6">
         <div className="mb-8">
-          <h1 className="text-4xl font-extrabold text-gray-900 mb-2">Traffic Here</h1>
-          <p className="text-gray-600">Monitor and manage your website traffic sources</p>
+          <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
+            Traffic Here
+          </h1>
+          <p className="text-gray-600">
+            Monitor and manage your website traffic sources
+          </p>
         </div>
 
         <div className="mb-8">
@@ -246,14 +260,20 @@ export default function DashboardHome() {
                 className="bg-white p-5 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold text-lg text-gray-900 truncate">{site.name}</h3>
+                  <h3 className="font-semibold text-lg text-gray-900 truncate">
+                    {site.name}
+                  </h3>
                   <button
                     onClick={() => toggleActive(site.id)}
                     className={`flex items-center gap-2 text-sm font-medium transition ${
                       site.isActive ? "text-green-600" : "text-gray-400"
                     }`}
                   >
-                    {site.isActive ? <ToggleRight className="w-5 h-5" /> : <ToggleLeft className="w-5 h-5" />}
+                    {site.isActive ? (
+                      <ToggleRight className="w-5 h-5" />
+                    ) : (
+                      <ToggleLeft className="w-5 h-5" />
+                    )}
                     <span
                       className={
                         site.status === "pending"
@@ -310,7 +330,9 @@ export default function DashboardHome() {
       {isModalOpen && (
         <div className="fixed inset-0 bg-white/90 bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Add New Website</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-4">
+              Add New Website
+            </h2>
             <input
               type="text"
               value={url}

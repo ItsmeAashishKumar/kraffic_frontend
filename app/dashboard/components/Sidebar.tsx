@@ -22,13 +22,41 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "Dashboard", icon: <LayoutDashboard className="w-5 h-5" />, href: "/dashboard" },
-  { label: "Traditional SEO", icon: <Search className="w-5 h-5" />, href: "/traditional-seo" },
-  { label: "AI Discoverability", icon: <Brain className="w-5 h-5" />, href: "/ai-discoverability" },
-  { label: "Search Console", icon: <AreaChart className="w-5 h-5" />, href: "/search-console" },
-  { label: "Tasks", icon: <ClipboardCheck className="w-5 h-5" />, href: "/tasks" },
-  { label: "Templates", icon: <FileText className="w-5 h-5" />, href: "/templates" },
-  { label: "Reports", icon: <FileBarChart className="w-5 h-5" />, href: "/dashboard/report" },
+  {
+    label: "Dashboard",
+    icon: <LayoutDashboard className="w-5 h-5" />,
+    href: "/dashboard",
+  },
+  {
+    label: "Traditional SEO",
+    icon: <Search className="w-5 h-5" />,
+    href: "/traditional-seo",
+  },
+  {
+    label: "AI Discoverability",
+    icon: <Brain className="w-5 h-5" />,
+    href: "/ai-discoverability",
+  },
+  {
+    label: "Search Console",
+    icon: <AreaChart className="w-5 h-5" />,
+    href: "/search-console",
+  },
+  {
+    label: "Tasks",
+    icon: <ClipboardCheck className="w-5 h-5" />,
+    href: "/tasks",
+  },
+  {
+    label: "Templates",
+    icon: <FileText className="w-5 h-5" />,
+    href: "/templates",
+  },
+  {
+    label: "Reports",
+    icon: <FileBarChart className="w-5 h-5" />,
+    href: "/dashboard/report",
+  },
 ];
 
 export const Sidebar: React.FC<{
@@ -38,7 +66,11 @@ export const Sidebar: React.FC<{
   const pathname = usePathname(); // <-- current URL
 
   const sidebarWidth = isCollapsed ? "w-20" : "w-64";
-  const toggleIcon = isCollapsed ? <ChevronsLeft className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />;
+  const toggleIcon = isCollapsed ? (
+    <ChevronsLeft className="w-5 h-5" />
+  ) : (
+    <ChevronLeft className="w-5 h-5" />
+  );
 
   const isActive = (href: string) => {
     if (href === "/dashboard/report") {
@@ -74,10 +106,12 @@ export const Sidebar: React.FC<{
                 : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
             } ${isCollapsed ? "justify-center" : "gap-3"}`}
           >
-            <div className="w-5 h-5 flex items-center justify-center flex-shrink-0">
+            <div className="w-5 h-5 flex items-center justify-center ">
               {item.icon}
             </div>
-            {!isCollapsed && <span className="text-sm tracking-wide flex-1">{item.label}</span>}
+            {!isCollapsed && (
+              <span className="text-sm tracking-wide flex-1">{item.label}</span>
+            )}
           </button>
         ))}
 
@@ -90,7 +124,9 @@ export const Sidebar: React.FC<{
             }`}
           >
             <Settings className="w-5 h-5" />
-            {!isCollapsed && <span className="text-sm tracking-wide">Settings</span>}
+            {!isCollapsed && (
+              <span className="text-sm tracking-wide">Settings</span>
+            )}
           </button>
         </div>
       </nav>
