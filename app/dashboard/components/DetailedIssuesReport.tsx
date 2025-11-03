@@ -14,7 +14,7 @@ export const DetailedIssuesReport: React.FC<{
     </h2>
 
     {Object.entries(detailed_report).map(([cat, rep]) => (
-      <div key={cat} className="bg-white shadow-lg rounded-xl mb-6 border border-gray-200 overflow-hidden">
+      <div key={cat} className="bg-white shadow-lg rounded-sm mb-6 border border-gray-200 overflow-hidden">
         <div className="p-5 bg-indigo-50 border-b border-indigo-200 flex justify-between items-center">
           <h3 className="text-lg font-bold text-indigo-900">{cat}</h3>
           <span className="px-3 py-1 text-sm font-extrabold rounded-md bg-indigo-600 text-white shadow-md">
