@@ -1,8 +1,10 @@
+"use client";
 import React, { useState } from "react";
-import axios from "axios";
+import { useRouter } from "next/navigation"; // 👈 import router
 import api from "@/api";
 
 const Signup: React.FC = () => {
+  const router = useRouter(); // 👈 initialize router
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,9 +37,8 @@ const Signup: React.FC = () => {
         localStorage.setItem("userInfo", JSON.stringify(response.data.data));
       }
 
-      alert("Signup successful!");
-      // Redirect to login page or dashboard
-      // e.g., window.location.href = "/login";
+      // ✅ Redirect to /login after successful signup
+      router.push("/login");
     } catch (err: any) {
       console.error(err);
       setError(
@@ -151,6 +152,6 @@ const Signup: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Signup;
