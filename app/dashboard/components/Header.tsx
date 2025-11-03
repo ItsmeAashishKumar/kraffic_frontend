@@ -88,3 +88,4 @@ export const Header: React.FC<{ isCollapsed: boolean }> = ({ isCollapsed }) => {
     </header>
   );
 };
+
